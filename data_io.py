@@ -1,21 +1,21 @@
 import json
 import os
 from datetime import datetime
+from typing import Optional
 
+import constants
 from model import Data
 
-BACKUP_FOLDER_PATH = './backup'
 
-
-def _file_path(file_name: str): return f'{BACKUP_FOLDER_PATH}/{file_name}'
+def _file_path(file_name: str): return f'{constants.BACKUP_FOLDER_PATH}/{file_name}'
 
 
 def _file(file_name: str, mode: str): return open(_file_path(file_name), mode, encoding='utf-8')
 
 
 def _create_backup_folder_if_necessary() -> None:
-    if not os.path.isdir(BACKUP_FOLDER_PATH):
-        os.makedirs(BACKUP_FOLDER_PATH)
+    if not os.path.isdir(constants.BACKUP_FOLDER_PATH):
+        os.makedirs(constants.BACKUP_FOLDER_PATH)
 
 
 def new_file_name_without_file_extension() -> str:
@@ -56,3 +56,11 @@ def dump_csv(file_name_without_file_extension: str, data: Data) -> None:
                 ]
                 line = separator.join(values)
                 file.write(f'{line}\n')
+
+
+def read_token(token_file_path: Optional[str], fallback: str) -> str:
+    if token_file_path is None or not os.path.isfile(token_file_path):
+        return fallback
+    else:
+        with open(token_file_path, 'r', encoding='utf-8') as file:
+            return file.read()
