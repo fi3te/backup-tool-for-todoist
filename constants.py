@@ -4,7 +4,7 @@ from argh import arg
 
 import data_io
 
-SYNC_ENDPOINT = 'https://api.todoist.com/sync/v8/sync'
+SYNC_ENDPOINT = 'https://api.todoist.com/sync/v9/sync'
 TOKEN = 'no_token'
 BACKUP_FOLDER_PATH = './backup'
 

@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import Optional
 
 import constants
-from model import Data
+from model import Data, Due
 
 
 def _file_path(file_name: str): return f'{constants.BACKUP_FOLDER_PATH}/{file_name}'
@@ -46,6 +46,7 @@ def dump_csv(file_name_without_file_extension: str, data: Data) -> None:
         for project in data.projects:
             items = [item for item in data.items if project.id == item.project_id]
             for item in items:
+                item.due = Due(date='-', string='-', is_recurring=False) if item.due is None else item.due
                 values = [
                     project.name,
                     item.content,
